@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorkoutManagementSystem.Svc.Infrastracture.Entities;
 
 namespace WorkoutManagementSystem.Svc.Infrastracture
 {
@@ -13,5 +14,7 @@ namespace WorkoutManagementSystem.Svc.Infrastracture
         {
             
         }
+
+        DbSet<Workout> Workouts { get; set; }
     }
 }
