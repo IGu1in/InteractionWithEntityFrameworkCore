@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WorkoutManagementSystem.Svc.Contract;
+using WorkoutManagementSystem.Svc.Contract.Dto;
 
 namespace WorkoutManagementSystem.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class WorkoutManagementSystemController : ControllerBase//, IWorkoutManagementsSystemService
+    [Route("api/[controller]/[action]")]
+    public class WorkoutManagementSystemController : ControllerBase, IWorkoutManagementsSystemService
     {
         private readonly IWorkoutManagementsSystemService _workoutManagementsSystemService;
 
@@ -15,10 +16,16 @@ namespace WorkoutManagementSystem.Controllers
             _workoutManagementsSystemService = workoutManagementsSystemService;
         }
 
-        [HttpGet]
-        public async Task<string> StringMetan()
+        [HttpPut]
+        public async Task<WorkoutDto> CreateWorkout(WorkoutDto workoutDto)
         {
-            return "<h2>Hello METANIT.COM!</h2>";
+            return await _workoutManagementsSystemService.CreateWorkout(workoutDto);
+        }
+
+        [HttpGet]
+        public async Task<WorkoutDto> GetWorkoutByIdAsync(long id)
+        {
+            return await _workoutManagementsSystemService.GetWorkoutByIdAsync(id);
         }
     }
 }

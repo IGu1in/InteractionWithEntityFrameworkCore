@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WorkoutManagementSystem.Svc;
+using WorkoutManagementSystem.Svc.AutoMapperProfiles;
 using WorkoutManagementSystem.Svc.Contract;
 using WorkoutManagementSystem.Svc.Infrastracture;
 
@@ -8,12 +9,7 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddDbContext<WorkoutManagementSystemContext>(options => options.UseNpgsql(
-            builder.Configuration.GetConnectionString("DefaultConnection")
-        ));
-        builder.Services.AddControllers();
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddScoped<IWorkoutManagementsSystemService, WorkoutManagementsSystemService>();
+        ConfigureService(builder);
 
         var app = builder.Build();
 
@@ -31,5 +27,16 @@ internal class Program
             endpoints.MapControllers();
         });
         app.Run();
+    }
+
+    private static void ConfigureService(WebApplicationBuilder webApplicationBuilder)
+    {
+        webApplicationBuilder.Services.AddDbContext<WorkoutManagementSystemContext>(options => options.UseNpgsql(
+            webApplicationBuilder.Configuration.GetConnectionString("DefaultConnection")
+        ));
+        webApplicationBuilder.Services.AddControllers();
+        webApplicationBuilder.Services.AddSwaggerGen();
+        webApplicationBuilder.Services.AddAutoMapper(typeof(WorkouManagerSystemProfile));
+        webApplicationBuilder.Services.AddScoped<IWorkoutManagementsSystemService, WorkoutManagementsSystemService>();
     }
 }

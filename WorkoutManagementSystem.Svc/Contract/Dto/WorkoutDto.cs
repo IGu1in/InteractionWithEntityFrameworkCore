@@ -1,6 +1,8 @@
-﻿namespace WorkoutManagementSystem.Svc.Infrastracture.Entities
+﻿using WorkoutManagementSystem.Svc.Infrastracture.Entities;
+
+namespace WorkoutManagementSystem.Svc.Contract.Dto
 {
-    public class Workout : BaseEntity
+    public class WorkoutDto : BaseDto
     {
         public string Name { get; set; }
         public string Description { get; set; }
