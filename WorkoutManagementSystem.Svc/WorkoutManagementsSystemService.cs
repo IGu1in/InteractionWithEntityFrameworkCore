@@ -28,7 +28,10 @@ namespace WorkoutManagementSystem.Svc
 
         public async Task<WorkoutDto> GetWorkoutByIdAsync(long id)
         {
-            var workout = await _context.Workouts.FirstOrDefaultAsync(x => x.Id == id);
+            var workout = await _context.Workouts
+                .AsNoTracking()
+                .Include(work=>work.Exercises)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return _mapper.Map<WorkoutDto>(workout);
         }
