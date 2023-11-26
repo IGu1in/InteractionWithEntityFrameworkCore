@@ -10,7 +10,7 @@ namespace WorkoutManagementSystem.Svc.Infrastracture
             
         }
 
-        DbSet<Workout> Workouts { get; set; }
-        DbSet<Manufacturer> Manufacturer { get; set; }
+        public DbSet<Workout> Workouts { get; set; }
+        public DbSet<Manufacturer> Manufacturer { get; set; }
     }
 }

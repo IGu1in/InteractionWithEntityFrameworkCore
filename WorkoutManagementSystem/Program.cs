@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WorkoutManagementSystem.Svc;
+using WorkoutManagementSystem.Svc.AutoMapperProfiles;
 using WorkoutManagementSystem.Svc.Contract;
 using WorkoutManagementSystem.Svc.Infrastracture;
 
@@ -35,6 +36,7 @@ internal class Program
         ));
         webApplicationBuilder.Services.AddControllers();
         webApplicationBuilder.Services.AddSwaggerGen();
+        webApplicationBuilder.Services.AddAutoMapper(typeof(WorkouManagerSystemProfile));
         webApplicationBuilder.Services.AddScoped<IWorkoutManagementsSystemService, WorkoutManagementsSystemService>();
     }
 }

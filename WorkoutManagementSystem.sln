@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkoutManagementSystem", "WorkoutManagementSystem\WorkoutManagementSystem.csproj", "{D9D58E19-1732-418D-B96A-9DF2153DA9B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutManagementSystem.Svc", "WorkoutManagementSystem.Svc\WorkoutManagementSystem.Svc.csproj", "{1BC14A88-7BEE-4E38-BDC4-DBB1BF4962EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkoutManagementSystem.Svc", "WorkoutManagementSystem.Svc\WorkoutManagementSystem.Svc.csproj", "{1BC14A88-7BEE-4E38-BDC4-DBB1BF4962EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
