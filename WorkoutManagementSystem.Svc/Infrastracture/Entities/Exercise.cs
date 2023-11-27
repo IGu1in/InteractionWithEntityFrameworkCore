@@ -6,5 +6,6 @@
         public string Description { get; set; }
 
         public long WorkoutId {get; set; }
+        public ICollection<GymEquipment>? GymEquipment { get; set; }
     }
 }
