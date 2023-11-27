@@ -80,5 +80,18 @@ namespace WorkoutManagementSystem.Svc
 
             return _mapper.Map<WorkoutDto>(workout);
         }
+
+        public async Task<WorkoutDto> RemoveWorkoutByIdAsync(long id)
+        {
+            var workout = await _context.Workouts
+                .Include(work => work.Exercises)
+                .Include(x => x.StarParticipants)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var result = _context.Remove(workout);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<WorkoutDto>(result.Entity);
+        }
     }
 }

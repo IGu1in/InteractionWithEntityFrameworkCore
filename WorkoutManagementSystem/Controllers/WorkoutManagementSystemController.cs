@@ -39,5 +39,11 @@ namespace WorkoutManagementSystem.Controllers
         {
             return await _workoutManagementsSystemService.ChangeStarForWorkoutAsync(id, starParticipants);
         }
+
+        [HttpDelete]
+        public async Task<WorkoutDto> RemoveWorkoutByIdAsync(long id)
+        {
+            return await _workoutManagementsSystemService.RemoveWorkoutByIdAsync(id);
+        }
     }
 }
