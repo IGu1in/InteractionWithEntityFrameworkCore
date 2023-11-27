@@ -17,15 +17,27 @@ namespace WorkoutManagementSystem.Controllers
         }
 
         [HttpPut]
-        public async Task<WorkoutDto> CreateWorkout(WorkoutDto workoutDto)
+        public async Task<WorkoutDto> CreateWorkoutAsync(WorkoutDto workoutDto)
         {
-            return await _workoutManagementsSystemService.CreateWorkout(workoutDto);
+            return await _workoutManagementsSystemService.CreateWorkoutAsync(workoutDto);
         }
 
         [HttpGet]
         public async Task<WorkoutDto> GetWorkoutByIdAsync(long id)
         {
             return await _workoutManagementsSystemService.GetWorkoutByIdAsync(id);
+        }
+
+        [HttpGet]
+        public async Task<int> GetCountExerciseInsideWorkoutByIdAsync(long id)
+        {
+            return await _workoutManagementsSystemService.GetCountExerciseInsideWorkoutByIdAsync(id);
+        }
+
+        [HttpPut]
+        public async Task<WorkoutDto> ChangeStarForWorkoutAsync(long id, StarParticipantsDto starParticipants)
+        {
+            return await _workoutManagementsSystemService.ChangeStarForWorkoutAsync(id, starParticipants);
         }
     }
 }

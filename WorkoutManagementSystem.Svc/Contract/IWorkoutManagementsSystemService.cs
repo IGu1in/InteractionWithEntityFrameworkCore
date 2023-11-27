@@ -5,6 +5,8 @@ namespace WorkoutManagementSystem.Svc.Contract
     public interface IWorkoutManagementsSystemService
     {
         Task<WorkoutDto> GetWorkoutByIdAsync(long id);
-        Task<WorkoutDto> CreateWorkout(WorkoutDto workoutDto);
+        Task<WorkoutDto> CreateWorkoutAsync(WorkoutDto workoutDto);
+        Task<int> GetCountExerciseInsideWorkoutByIdAsync(long id);
+        Task<WorkoutDto> ChangeStarForWorkoutAsync(long id, StarParticipantsDto starParticipants);
     }
 }

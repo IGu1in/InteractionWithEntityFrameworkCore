@@ -1,9 +1,6 @@
-﻿namespace WorkoutManagementSystem.Svc.Infrastracture.Entities
+﻿namespace WorkoutManagementSystem.Svc.Contract.Dto
 {
-    /// <summary>
-    /// Звездный участник
-    /// </summary>
-    public class StarParticipants : BaseEntity
+    public class StarParticipantsDto : BaseDto
     {
         /// <summary>
         /// Имя
@@ -14,7 +11,5 @@
         /// Достижения
         /// </summary>
         public string Achievements { get; set; }
-
-        public long WorkoutId { get; set; }
     }
 }
