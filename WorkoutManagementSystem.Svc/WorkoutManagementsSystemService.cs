@@ -41,6 +41,7 @@ namespace WorkoutManagementSystem.Svc
             var workout = await _context.Workouts
                 .AsNoTracking()
                 .Include(work=>work.Exercises)
+                .ThenInclude(exer=>exer.GymEquipment)
                 .Include(x => x.StarParticipants)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -106,6 +107,26 @@ namespace WorkoutManagementSystem.Svc
             await _context.SaveChangesAsync();
 
             return _mapper.Map<WorkoutDto>(result.Entity);
+        }
+
+        public async Task AddExerciseGymEquipmentAsync(long idExercise, long idGymEquipment)
+        {
+            var exercise = await _context.Exercise
+                .Include(e => e.GymEquipment)
+                .FirstOrDefaultAsync(e => e.Id == idExercise);
+
+            var equipment = await _context.GymEquipment.FirstOrDefaultAsync(eq => eq.Id == idGymEquipment);
+
+            exercise.GymEquipment.Add(equipment);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<GymEquipmentDto> CreateGymEquipmentAsync(GymEquipmentDto gymEquipmentDto)
+        {
+            var result = await _context.AddAsync(_mapper.Map<GymEquipment>(gymEquipmentDto));
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<GymEquipmentDto>(result.Entity);
         }
     }
 }

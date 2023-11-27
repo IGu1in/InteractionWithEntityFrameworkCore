@@ -10,5 +10,7 @@ namespace WorkoutManagementSystem.Svc.Contract
         Task<WorkoutDto> ChangeStarForWorkoutAsync(long id, StarParticipantsDto starParticipants);
         Task<WorkoutDto> RemoveWorkoutByIdAsync(long id);
         Task<WorkoutDto> AddExerciseForWorkoutAsync(long id, ExerciseDto exercise);
+        Task<GymEquipmentDto> CreateGymEquipmentAsync(GymEquipmentDto gymEquipmentDto);
+        Task AddExerciseGymEquipmentAsync(long idExercise, long idGymEquipment);
     }
 }

@@ -16,6 +16,9 @@ namespace WorkoutManagementSystem.Svc.AutoMapperProfiles
 
             CreateMap<StarParticipantsDto, StarParticipants>();
             CreateMap<StarParticipants, StarParticipantsDto>();
+
+            CreateMap<GymEquipmentDto, GymEquipment>();
+            CreateMap<GymEquipment, GymEquipmentDto>();
         }
     }
 }

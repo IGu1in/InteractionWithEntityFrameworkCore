@@ -12,5 +12,6 @@ namespace WorkoutManagementSystem.Svc.Infrastracture
 
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<GymEquipment> GymEquipment { get; set; }
+        public DbSet<Exercise> Exercise { get; set; }
     }
 }

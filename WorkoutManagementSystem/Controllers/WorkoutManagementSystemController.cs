@@ -51,5 +51,17 @@ namespace WorkoutManagementSystem.Controllers
         {
             return await _workoutManagementsSystemService.AddExerciseForWorkoutAsync(id, exercise);
         }
+
+        [HttpPut]
+        public async Task<GymEquipmentDto> CreateGymEquipmentAsync(GymEquipmentDto gymEquipmentDto)
+        {
+            return await _workoutManagementsSystemService.CreateGymEquipmentAsync(gymEquipmentDto);
+        }
+
+        [HttpPut]
+        public async Task AddExerciseGymEquipmentAsync(long idExercise, long idGymEquipment)
+        {
+            await _workoutManagementsSystemService.AddExerciseGymEquipmentAsync(idExercise, idGymEquipment);
+        }
     }
 }
