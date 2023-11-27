@@ -47,6 +47,7 @@ namespace WorkoutManagementSystem.Svc
             return _mapper.Map<WorkoutDto>(workout);
         }
 
+        //ToDo: доделать
         public async Task<WorkoutDto> ChangeStarForWorkoutAsync(long id, StarParticipantsDto starParticipants)
         {
             var workout = await _context.Workouts
@@ -76,6 +77,19 @@ namespace WorkoutManagementSystem.Svc
             };
             //workout.StarParticipants = _mapper.Map<StarParticipants>(starParticipants);
 
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<WorkoutDto>(workout);
+        }
+
+        //ToDo: доделать
+        public async Task<WorkoutDto> AddExerciseForWorkoutAsync(long id, ExerciseDto exercise)
+        {
+            var workout = await _context.Workouts
+                .Include(work => work.Exercises)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            workout.Exercises.Add(_mapper.Map<Exercise>(exercise));
+            
             await _context.SaveChangesAsync();
 
             return _mapper.Map<WorkoutDto>(workout);

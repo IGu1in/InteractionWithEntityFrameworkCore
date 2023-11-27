@@ -45,5 +45,11 @@ namespace WorkoutManagementSystem.Controllers
         {
             return await _workoutManagementsSystemService.RemoveWorkoutByIdAsync(id);
         }
+
+        [HttpPut]
+        public async Task<WorkoutDto> AddExerciseForWorkoutAsync(long id, ExerciseDto exercise)
+        {
+            return await _workoutManagementsSystemService.AddExerciseForWorkoutAsync(id, exercise);
+        }
     }
 }
