@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using WorkoutManagementSystem.Svc.Contract;
 using WorkoutManagementSystem.Svc.Contract.Dto;
 using WorkoutManagementSystem.Svc.Infrastracture;
@@ -11,11 +12,13 @@ namespace WorkoutManagementSystem.Svc
     {
         private readonly IMapper _mapper;
         private readonly WorkoutManagementSystemContext _context;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public WorkoutManagementsSystemService(IMapper mapper, WorkoutManagementSystemContext workoutManagementSystemContext)
+        public WorkoutManagementsSystemService(IMapper mapper, WorkoutManagementSystemContext workoutManagementSystemContext, IServiceScopeFactory serviceScopeFactory)
         {
             _mapper = mapper;
             _context = workoutManagementSystemContext;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         public async Task<WorkoutDto> CreateWorkoutAsync(WorkoutDto workoutDto)
@@ -26,22 +29,31 @@ namespace WorkoutManagementSystem.Svc
             return _mapper.Map<WorkoutDto>(result.Entity);
         }
 
+        /// <summary>
+        /// Асинхронный метод 5.11
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<int> GetCountExerciseInsideWorkoutByIdAsync(long id)
         {
-            var workout = await _context.Workouts.FirstOrDefaultAsync(x => x.Id == id);
-            _context.Entry(workout)
-                    .Collection(w => w.Exercises)
-                    .Load();
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<WorkoutManagementSystemContext>();
+                var workout = await context.Workouts.FirstOrDefaultAsync(x => x.Id == id);
+                _context.Entry(workout)
+                        .Collection(w => w.Exercises)
+                        .Load();
 
-            return workout.Exercises.Count();
+                return workout.Exercises.Count();
+            }
         }
 
         public async Task<WorkoutDto> GetWorkoutByIdAsync(long id)
         {
             var workout = await _context.Workouts
                 .AsNoTracking()
-                .Include(work=>work.Exercises)
-                .ThenInclude(exer=>exer.GymEquipment)
+                .Include(work => work.Exercises)
+                .ThenInclude(exer => exer.GymEquipment)
                 .Include(x => x.StarParticipants)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -55,27 +67,27 @@ namespace WorkoutManagementSystem.Svc
                 .Include(x => x.StarParticipants)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            //if (workout.StarParticipants is null)
-            //{
-            //    await _context.AddAsync(new StarParticipants
-            //    {
-            //        Achievements = starParticipants.Achievements,
-            //        Id = starParticipants.Id,
-            //        Name = starParticipants.Name,
-            //        WorkoutId = id
-            //    });
-            //}
-            //else
-            //{
-            //    workout.StarParticipants = _mapper.Map<StarParticipants>(starParticipants);
-            //}
-            workout.StarParticipants = new StarParticipants
+            if (workout.StarParticipants is null)
             {
-                Achievements = starParticipants.Achievements,
-                Id = starParticipants.Id,
-                Name = starParticipants.Name,
-                WorkoutId = id
-            };
+                await _context.AddAsync(new StarParticipants
+                {
+                    Achievements = starParticipants.Achievements,
+                    Id = starParticipants.Id,
+                    Name = starParticipants.Name,
+                    WorkoutId = id
+                });
+            }
+            else
+            {
+                workout.StarParticipants = _mapper.Map<StarParticipants>(starParticipants);
+            }
+            //workout.StarParticipants = new StarParticipants
+            //{
+            //    Achievements = starParticipants.Achievements,
+            //    Id = starParticipants.Id,
+            //    Name = starParticipants.Name,
+            //    WorkoutId = id
+            //};
             //workout.StarParticipants = _mapper.Map<StarParticipants>(starParticipants);
 
             await _context.SaveChangesAsync();
@@ -90,7 +102,7 @@ namespace WorkoutManagementSystem.Svc
                 .Include(work => work.Exercises)
                 .FirstOrDefaultAsync(x => x.Id == id);
             workout.Exercises.Add(_mapper.Map<Exercise>(exercise));
-            
+
             await _context.SaveChangesAsync();
 
             return _mapper.Map<WorkoutDto>(workout);
@@ -121,12 +133,64 @@ namespace WorkoutManagementSystem.Svc
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Использование транзакций 4.7.2
+        /// </summary>
+        /// <param name="gymEquipmentDto"></param>
+        /// <returns></returns>
         public async Task<GymEquipmentDto> CreateGymEquipmentAsync(GymEquipmentDto gymEquipmentDto)
         {
-            var result = await _context.AddAsync(_mapper.Map<GymEquipment>(gymEquipmentDto));
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var result = await _context.AddAsync(_mapper.Map<GymEquipment>(gymEquipmentDto));
+                    await _context.SaveChangesAsync();
+                    transaction.Commit();
+
+                    return _mapper.Map<GymEquipmentDto>(result.Entity);
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+
+                    throw;
+                }
+            }
+        }
+
+        //ToDo: не работает пока не будет исправлено уникальное создание первичных ключей
+        /// <summary>
+        /// копирование 6.2.3
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<WorkoutDto> CopyWorkoutDto(long id)
+        {
+            var workout = await _context.Workouts
+                .AsNoTracking()
+                .Include(work => work.StarParticipants)
+                .Include(work => work.Exercises)
+                .ThenInclude(ex => ex.GymEquipment)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            workout.Id = default;
+            workout.StarParticipants.Id = default;
+
+            foreach (var exercise in workout.Exercises)
+            {
+                exercise.Id = default;
+
+                foreach (var equipment in exercise.GymEquipment)
+                {
+                    equipment.Id = default;
+                }
+            }
+
+            var workoutCopy = await _context.AddAsync(workout);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<GymEquipmentDto>(result.Entity);
+            return _mapper.Map<WorkoutDto>(workoutCopy.Entity);
         }
     }
 }

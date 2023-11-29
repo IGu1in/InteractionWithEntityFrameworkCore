@@ -63,5 +63,11 @@ namespace WorkoutManagementSystem.Controllers
         {
             await _workoutManagementsSystemService.AddExerciseGymEquipmentAsync(idExercise, idGymEquipment);
         }
+
+        [HttpPut]
+        public async Task<WorkoutDto> CopyWorkoutDto(long id)
+        {
+            return await _workoutManagementsSystemService.CopyWorkoutDto(id);
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace WorkoutManagementSystem.Svc.Contract
         Task<WorkoutDto> AddExerciseForWorkoutAsync(long id, ExerciseDto exercise);
         Task<GymEquipmentDto> CreateGymEquipmentAsync(GymEquipmentDto gymEquipmentDto);
         Task AddExerciseGymEquipmentAsync(long idExercise, long idGymEquipment);
+        Task<WorkoutDto> CopyWorkoutDto(long id);
     }
 }
