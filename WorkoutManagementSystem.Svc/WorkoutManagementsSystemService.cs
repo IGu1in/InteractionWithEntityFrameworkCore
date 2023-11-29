@@ -134,7 +134,7 @@ namespace WorkoutManagementSystem.Svc
         }
 
         /// <summary>
-        /// Использование транзакций 4.7.2
+        /// Использование транзакций 4.7.2, использование скрытого свойства 7.14
         /// </summary>
         /// <param name="gymEquipmentDto"></param>
         /// <returns></returns>
@@ -144,7 +144,9 @@ namespace WorkoutManagementSystem.Svc
             {
                 try
                 {
-                    var result = await _context.AddAsync(_mapper.Map<GymEquipment>(gymEquipmentDto));
+                    var gymEqupment = _mapper.Map<GymEquipment>(gymEquipmentDto);
+                    var result = await _context.AddAsync(gymEqupment);
+                    _context.Entry(gymEqupment).Property("CreatedOn").CurrentValue = DateTime.UtcNow;
                     await _context.SaveChangesAsync();
                     transaction.Commit();
 

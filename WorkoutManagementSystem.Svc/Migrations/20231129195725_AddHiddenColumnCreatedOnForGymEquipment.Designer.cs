@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WorkoutManagementSystem.Svc.Infrastracture;
@@ -11,9 +12,10 @@ using WorkoutManagementSystem.Svc.Infrastracture;
 namespace WorkoutManagementSystem.Svc.Migrations
 {
     [DbContext(typeof(WorkoutManagementSystemContext))]
-    partial class WorkoutManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231129195725_AddHiddenColumnCreatedOnForGymEquipment")]
+    partial class AddHiddenColumnCreatedOnForGymEquipment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

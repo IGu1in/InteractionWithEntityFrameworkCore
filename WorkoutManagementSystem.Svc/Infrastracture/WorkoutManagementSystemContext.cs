@@ -18,6 +18,7 @@ namespace WorkoutManagementSystem.Svc.Infrastracture
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new WorkoutConfig());
+            modelBuilder.ApplyConfiguration(new GymEquipmentConfig());
         }
     }
 }
