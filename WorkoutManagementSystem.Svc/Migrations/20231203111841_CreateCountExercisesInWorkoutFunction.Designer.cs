@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WorkoutManagementSystem.Svc.Infrastracture;
@@ -11,9 +12,10 @@ using WorkoutManagementSystem.Svc.Infrastracture;
 namespace WorkoutManagementSystem.Svc.Migrations
 {
     [DbContext(typeof(WorkoutManagementSystemContext))]
-    partial class WorkoutManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231203111841_CreateCountExercisesInWorkoutFunction")]
+    partial class CreateCountExercisesInWorkoutFunction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasIndex("GymEquipmentId");
 
-                    b.ToTable("ExerciseGymEquipment", (string)null);
+                    b.ToTable("ExerciseGymEquipment");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.Exercise", b =>
@@ -60,7 +62,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("Exercise", (string)null);
+                    b.ToTable("Exercise");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.GymEquipment", b =>
@@ -80,7 +82,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GymEquipment", (string)null);
+                    b.ToTable("GymEquipment");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.StarParticipants", b =>
@@ -108,7 +110,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                     b.HasIndex("WorkoutId")
                         .IsUnique();
 
-                    b.ToTable("StarParticipants", (string)null);
+                    b.ToTable("StarParticipants");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.Workout", b =>
@@ -132,7 +134,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Workouts", (string)null);
+                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("ExerciseGymEquipment", b =>

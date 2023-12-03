@@ -69,5 +69,11 @@ namespace WorkoutManagementSystem.Controllers
         {
             return await _workoutManagementsSystemService.CopyWorkoutDto(id);
         }
+
+        [HttpGet]
+        public async Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id)
+        {
+            return await _workoutManagementsSystemService.GetCountExerciseInsideWorkoutByDbFunction(id);
+        }
     }
 }

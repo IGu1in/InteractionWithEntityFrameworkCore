@@ -5,6 +5,7 @@ using WorkoutManagementSystem.Svc.Contract;
 using WorkoutManagementSystem.Svc.Contract.Dto;
 using WorkoutManagementSystem.Svc.Infrastracture;
 using WorkoutManagementSystem.Svc.Infrastracture.Entities;
+using WorkoutManagementSystem.Svc.Infrastracture.Functions;
 
 namespace WorkoutManagementSystem.Svc
 {
@@ -40,12 +41,21 @@ namespace WorkoutManagementSystem.Svc
             {
                 var context = scope.ServiceProvider.GetRequiredService<WorkoutManagementSystemContext>();
                 var workout = await context.Workouts.FirstOrDefaultAsync(x => x.Id == id);
+                //ToDo: проверить
                 _context.Entry(workout)
                         .Collection(w => w.Exercises)
                         .Load();
 
                 return workout.Exercises.Count();
             }
+        }
+
+        public async Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id)
+        {
+            var answer = WorkoutManagementSystemContext.CountExercisesInWorkout(id);
+            //var answer = _context.Database.ExecuteSqlRaw($"SELECT public.countexercisesinworkout({id})");
+
+            return answer;
         }
 
         public async Task<WorkoutDto> GetWorkoutByIdAsync(long id)
