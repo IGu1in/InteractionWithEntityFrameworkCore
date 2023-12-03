@@ -25,6 +25,7 @@ namespace WorkoutManagementSystem.Svc.Infrastracture
         {
             modelBuilder.ApplyConfiguration(new WorkoutConfig());
             modelBuilder.ApplyConfiguration(new GymEquipmentConfig());
+            modelBuilder.UseSerialColumns();
         }
     }
 }

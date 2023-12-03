@@ -49,6 +49,9 @@ namespace WorkoutManagementSystem.Svc
             }
         }
 
+        /// <summary>
+        /// Вызов скалярной функции 10.1.1
+        /// </summary>
         public async Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id)
         {          
             var answer = _context.Workouts

@@ -20,7 +20,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                 .HasAnnotation("ProductVersion", "6.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
 
             modelBuilder.Entity("ExerciseGymEquipment", b =>
                 {
@@ -34,7 +34,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasIndex("GymEquipmentId");
 
-                    b.ToTable("ExerciseGymEquipment", (string)null);
+                    b.ToTable("ExerciseGymEquipment");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.Exercise", b =>
@@ -43,7 +43,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -60,7 +60,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("Exercise", (string)null);
+                    b.ToTable("Exercise");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.GymEquipment", b =>
@@ -69,7 +69,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -80,7 +80,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GymEquipment", (string)null);
+                    b.ToTable("GymEquipment");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.StarParticipants", b =>
@@ -89,7 +89,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Achievements")
                         .IsRequired()
@@ -108,7 +108,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                     b.HasIndex("WorkoutId")
                         .IsUnique();
 
-                    b.ToTable("StarParticipants", (string)null);
+                    b.ToTable("StarParticipants");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.Workout", b =>
@@ -117,7 +117,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DateCreation")
                         .HasColumnType("date");
@@ -132,7 +132,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Workouts", (string)null);
+                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("ExerciseGymEquipment", b =>
