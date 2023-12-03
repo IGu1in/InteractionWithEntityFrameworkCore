@@ -5,7 +5,6 @@ using WorkoutManagementSystem.Svc.Contract;
 using WorkoutManagementSystem.Svc.Contract.Dto;
 using WorkoutManagementSystem.Svc.Infrastracture;
 using WorkoutManagementSystem.Svc.Infrastracture.Entities;
-using WorkoutManagementSystem.Svc.Infrastracture.Functions;
 
 namespace WorkoutManagementSystem.Svc
 {
@@ -51,11 +50,15 @@ namespace WorkoutManagementSystem.Svc
         }
 
         public async Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id)
-        {
-            var answer = WorkoutManagementSystemContext.CountExercisesInWorkout(id);
-            //var answer = _context.Database.ExecuteSqlRaw($"SELECT public.countexercisesinworkout({id})");
+        {          
+            var answer = _context.Workouts
+                .Where(w=>w.Id == id)
+                .Select(e => new
+            {
+                Count = WorkoutManagementSystemContext.CountExercisesInWorkout(id)
+            });
 
-            return answer;
+            return answer.FirstOrDefault().Count;
         }
 
         public async Task<WorkoutDto> GetWorkoutByIdAsync(long id)
