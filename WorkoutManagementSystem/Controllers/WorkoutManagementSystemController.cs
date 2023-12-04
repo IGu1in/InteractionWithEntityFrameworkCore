@@ -17,15 +17,63 @@ namespace WorkoutManagementSystem.Controllers
         }
 
         [HttpPut]
-        public async Task<WorkoutDto> CreateWorkout(WorkoutDto workoutDto)
+        public async Task<WorkoutDto> CreateWorkoutAsync(WorkoutDto workoutDto)
         {
-            return await _workoutManagementsSystemService.CreateWorkout(workoutDto);
+            return await _workoutManagementsSystemService.CreateWorkoutAsync(workoutDto);
         }
 
         [HttpGet]
         public async Task<WorkoutDto> GetWorkoutByIdAsync(long id)
         {
             return await _workoutManagementsSystemService.GetWorkoutByIdAsync(id);
+        }
+
+        [HttpGet]
+        public async Task<int> GetCountExerciseInsideWorkoutByIdAsync(long id)
+        {
+            return await _workoutManagementsSystemService.GetCountExerciseInsideWorkoutByIdAsync(id);
+        }
+
+        [HttpPut]
+        public async Task<WorkoutDto> ChangeStarForWorkoutAsync(long id, StarParticipantsDto starParticipants)
+        {
+            return await _workoutManagementsSystemService.ChangeStarForWorkoutAsync(id, starParticipants);
+        }
+
+        [HttpDelete]
+        public async Task<WorkoutDto> RemoveWorkoutByIdAsync(long id)
+        {
+            return await _workoutManagementsSystemService.RemoveWorkoutByIdAsync(id);
+        }
+
+        [HttpPut]
+        public async Task<WorkoutDto> AddExerciseForWorkoutAsync(long id, ExerciseDto exercise)
+        {
+            return await _workoutManagementsSystemService.AddExerciseForWorkoutAsync(id, exercise);
+        }
+
+        [HttpPut]
+        public async Task<GymEquipmentDto> CreateGymEquipmentAsync(GymEquipmentDto gymEquipmentDto)
+        {
+            return await _workoutManagementsSystemService.CreateGymEquipmentAsync(gymEquipmentDto);
+        }
+
+        [HttpPut]
+        public async Task AddExerciseGymEquipmentAsync(long idExercise, long idGymEquipment)
+        {
+            await _workoutManagementsSystemService.AddExerciseGymEquipmentAsync(idExercise, idGymEquipment);
+        }
+
+        [HttpPut]
+        public async Task<WorkoutDto> CopyWorkoutDto(long id)
+        {
+            return await _workoutManagementsSystemService.CopyWorkoutDto(id);
+        }
+
+        [HttpGet]
+        public async Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id)
+        {
+            return await _workoutManagementsSystemService.GetCountExerciseInsideWorkoutByDbFunction(id);
         }
     }
 }

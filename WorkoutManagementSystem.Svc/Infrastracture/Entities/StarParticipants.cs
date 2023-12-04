@@ -1,4 +1,6 @@
-﻿namespace WorkoutManagementSystem.Svc.Infrastracture.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WorkoutManagementSystem.Svc.Infrastracture.Entities
 {
     /// <summary>
     /// Звездный участник
@@ -13,6 +15,9 @@
         /// <summary>
         /// Достижения
         /// </summary>
+        [MaxLength(200)]
         public string Achievements { get; set; }
+
+        public long WorkoutId { get; set; }
     }
 }

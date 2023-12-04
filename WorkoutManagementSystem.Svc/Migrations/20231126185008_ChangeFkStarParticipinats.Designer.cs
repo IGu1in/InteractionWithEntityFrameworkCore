@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WorkoutManagementSystem.Svc.Infrastracture;
@@ -11,31 +12,17 @@ using WorkoutManagementSystem.Svc.Infrastracture;
 namespace WorkoutManagementSystem.Svc.Migrations
 {
     [DbContext(typeof(WorkoutManagementSystemContext))]
-    partial class WorkoutManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231126185008_ChangeFkStarParticipinats")]
+    partial class ChangeFkStarParticipinats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
-
-            modelBuilder.Entity("ExerciseGymEquipment", b =>
-                {
-                    b.Property<long>("ExercisesId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("GymEquipmentId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ExercisesId", "GymEquipmentId");
-
-                    b.HasIndex("GymEquipmentId");
-
-                    b.ToTable("ExerciseGymEquipment");
-                });
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.Exercise", b =>
                 {
@@ -43,7 +30,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -53,7 +40,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("WorkoutId")
+                    b.Property<long?>("WorkoutId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -63,16 +50,17 @@ namespace WorkoutManagementSystem.Svc.Migrations
                     b.ToTable("Exercise");
                 });
 
-            modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.GymEquipment", b =>
+            modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.Manufacturer", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -80,7 +68,7 @@ namespace WorkoutManagementSystem.Svc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GymEquipment");
+                    b.ToTable("Manufacturer");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.StarParticipants", b =>
@@ -89,12 +77,11 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Achievements")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -117,10 +104,10 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("DateCreation")
-                        .HasColumnType("date");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -135,28 +122,11 @@ namespace WorkoutManagementSystem.Svc.Migrations
                     b.ToTable("Workouts");
                 });
 
-            modelBuilder.Entity("ExerciseGymEquipment", b =>
-                {
-                    b.HasOne("WorkoutManagementSystem.Svc.Infrastracture.Entities.Exercise", null)
-                        .WithMany()
-                        .HasForeignKey("ExercisesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WorkoutManagementSystem.Svc.Infrastracture.Entities.GymEquipment", null)
-                        .WithMany()
-                        .HasForeignKey("GymEquipmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.Exercise", b =>
                 {
                     b.HasOne("WorkoutManagementSystem.Svc.Infrastracture.Entities.Workout", null)
                         .WithMany("Exercises")
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkoutId");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.StarParticipants", b =>

@@ -6,5 +6,6 @@
         public string Description { get; set; }
         public DateTime DateCreation { get; set; }
         public StarParticipants? StarParticipants { get; set; }
+        public ICollection<Exercise> Exercises { get; set; }
     }
 }

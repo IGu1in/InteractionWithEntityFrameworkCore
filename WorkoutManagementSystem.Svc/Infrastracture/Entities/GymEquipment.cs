@@ -1,8 +1,8 @@
 ﻿namespace WorkoutManagementSystem.Svc.Infrastracture.Entities
 {
-    public class Manufacturer : BaseEntity
+    public class GymEquipment : BaseEntity
     {
         public string Name { get; set; }
-        public string Country { get; set; }
+        public ICollection<Exercise>? Exercises { get; set; }
     }
 }

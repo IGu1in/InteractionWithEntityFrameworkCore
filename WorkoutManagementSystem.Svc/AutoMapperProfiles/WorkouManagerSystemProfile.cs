@@ -10,6 +10,15 @@ namespace WorkoutManagementSystem.Svc.AutoMapperProfiles
         {
             CreateMap<WorkoutDto, Workout>();
             CreateMap<Workout, WorkoutDto>();
+            
+            CreateMap<ExerciseDto, Exercise>();
+            CreateMap<Exercise, ExerciseDto>();
+
+            CreateMap<StarParticipantsDto, StarParticipants>();
+            CreateMap<StarParticipants, StarParticipantsDto>();
+
+            CreateMap<GymEquipmentDto, GymEquipment>();
+            CreateMap<GymEquipment, GymEquipmentDto>();
         }
     }
 }
