@@ -4,11 +4,11 @@ using WorkoutManagementSystem.Svc.Infrastracture.Entities;
 
 namespace WorkoutManagementSystem.Svc.Infrastracture.Configs
 {
-    public class WorkoutConfig : IEntityTypeConfiguration<Workout>
+    public class TechnicalDaysConfig : IEntityTypeConfiguration<TechnicalDays>
     {
-        public void Configure(EntityTypeBuilder<Workout> builder)
+        public void Configure(EntityTypeBuilder<TechnicalDays> builder)
         {
-            builder.Property(p => p.TrainingDate)
+            builder.Property(p => p.Date)
                 .HasColumnType("date");
         }
     }

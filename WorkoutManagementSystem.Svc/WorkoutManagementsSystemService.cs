@@ -29,6 +29,14 @@ namespace WorkoutManagementSystem.Svc
             return await GetWorkoutByIdAsync(result.Entity.Id);
         }
 
+        public async Task<TechnicalDays> CreateTechnicalDaysAsync(TechnicalDaysDto technicalDaysDto)
+        {
+            var result = await _context.AddAsync(_mapper.Map<TechnicalDays>(technicalDaysDto));
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<TechnicalDays>(result.Entity);
+        }
+
         /// <summary>
         /// Асинхронный метод 5.11
         /// </summary>

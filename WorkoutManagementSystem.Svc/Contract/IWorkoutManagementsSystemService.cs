@@ -1,4 +1,5 @@
 ﻿using WorkoutManagementSystem.Svc.Contract.Dto;
+using WorkoutManagementSystem.Svc.Infrastracture.Entities;
 
 namespace WorkoutManagementSystem.Svc.Contract
 {
@@ -14,5 +15,6 @@ namespace WorkoutManagementSystem.Svc.Contract
         Task AddExerciseGymEquipmentAsync(long idExercise, long idGymEquipment);
         Task<WorkoutDto> CopyWorkoutDto(long id);
         Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id);
+        Task<TechnicalDays> CreateTechnicalDaysAsync(TechnicalDaysDto technicalDaysDto);
     }
 }

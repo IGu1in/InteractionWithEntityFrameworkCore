@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WorkoutManagementSystem.Svc.Contract;
 using WorkoutManagementSystem.Svc.Contract.Dto;
+using WorkoutManagementSystem.Svc.Infrastracture.Entities;
 
 namespace WorkoutManagementSystem.Controllers
 {
@@ -74,6 +75,12 @@ namespace WorkoutManagementSystem.Controllers
         public async Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id)
         {
             return await _workoutManagementsSystemService.GetCountExerciseInsideWorkoutByDbFunction(id);
+        }
+
+        [HttpPut]
+        public async Task<TechnicalDays> CreateTechnicalDaysAsync(TechnicalDaysDto technicalDaysDto)
+        {
+            return await _workoutManagementsSystemService.CreateTechnicalDaysAsync(technicalDaysDto);
         }
     }
 }
