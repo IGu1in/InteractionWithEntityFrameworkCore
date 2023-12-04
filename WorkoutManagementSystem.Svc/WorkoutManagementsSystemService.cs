@@ -26,7 +26,7 @@ namespace WorkoutManagementSystem.Svc
             var result = await _context.AddAsync(_mapper.Map<Workout>(workoutDto));
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<WorkoutDto>(result.Entity);
+            return await GetWorkoutByIdAsync(result.Entity.Id);
         }
 
         /// <summary>
@@ -40,8 +40,7 @@ namespace WorkoutManagementSystem.Svc
             {
                 var context = scope.ServiceProvider.GetRequiredService<WorkoutManagementSystemContext>();
                 var workout = await context.Workouts.FirstOrDefaultAsync(x => x.Id == id);
-                //ToDo: проверить
-                _context.Entry(workout)
+                context.Entry(workout)
                         .Collection(w => w.Exercises)
                         .Load();
 
@@ -53,13 +52,13 @@ namespace WorkoutManagementSystem.Svc
         /// Вызов скалярной функции 10.1.1
         /// </summary>
         public async Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id)
-        {          
+        {
             var answer = _context.Workouts
-                .Where(w=>w.Id == id)
+                .Where(w => w.Id == id)
                 .Select(e => new
-            {
-                Count = WorkoutManagementSystemContext.CountExercisesInWorkout(id)
-            });
+                {
+                    Count = WorkoutManagementSystemContext.CountExercisesInWorkout(id)
+                });
 
             return answer.FirstOrDefault().Count;
         }
@@ -76,42 +75,18 @@ namespace WorkoutManagementSystem.Svc
             return _mapper.Map<WorkoutDto>(workout);
         }
 
-        //ToDo: доделать
         public async Task<WorkoutDto> ChangeStarForWorkoutAsync(long id, StarParticipantsDto starParticipants)
         {
             var workout = await _context.Workouts
                 .Include(x => x.StarParticipants)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (workout.StarParticipants is null)
-            {
-                await _context.AddAsync(new StarParticipants
-                {
-                    Achievements = starParticipants.Achievements,
-                    Id = starParticipants.Id,
-                    Name = starParticipants.Name,
-                    WorkoutId = id
-                });
-            }
-            else
-            {
-                workout.StarParticipants = _mapper.Map<StarParticipants>(starParticipants);
-            }
-            //workout.StarParticipants = new StarParticipants
-            //{
-            //    Achievements = starParticipants.Achievements,
-            //    Id = starParticipants.Id,
-            //    Name = starParticipants.Name,
-            //    WorkoutId = id
-            //};
-            //workout.StarParticipants = _mapper.Map<StarParticipants>(starParticipants);
-
+            workout.StarParticipants = _mapper.Map<StarParticipants>(starParticipants);
             await _context.SaveChangesAsync();
 
             return _mapper.Map<WorkoutDto>(workout);
         }
 
-        //ToDo: доделать
         public async Task<WorkoutDto> AddExerciseForWorkoutAsync(long id, ExerciseDto exercise)
         {
             var workout = await _context.Workouts
@@ -177,7 +152,6 @@ namespace WorkoutManagementSystem.Svc
             }
         }
 
-        //ToDo: не работает пока не будет исправлено уникальное создание первичных ключей
         /// <summary>
         /// копирование 6.2.3
         /// </summary>
