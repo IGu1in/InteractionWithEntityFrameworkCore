@@ -5,6 +5,9 @@ using WorkoutManagementSystem.Svc.Infrastracture.Entities;
 
 namespace WorkoutManagementSystem.Svc.Infrastracture
 {
+    /// <summary>
+    /// Контекст для работы с WorkoutManagementSystem
+    /// </summary>
     public class WorkoutManagementSystemContext : DbContext
     {
         private readonly ITechnicalDaysEventHandler _technicalDaysEventHandler;
@@ -18,12 +21,20 @@ namespace WorkoutManagementSystem.Svc.Infrastracture
         public DbSet<Exercise> Exercise { get; set; }
         public DbSet<TechnicalDays> TechnicalDays { get; set; }
 
+        /// <summary>
+        /// Скалярная функция базы данных для подсчета количества упражнений в тренировке
+        /// </summary>
+        /// <param name="workoutId">Идентификатор тренировки</param>
+        /// <returns>Количество упражнений в тренировке</returns>
         [DbFunction("countexercisesinworkout", Schema = "public")]
         public static int CountExercisesInWorkout(int workoutId)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Перегруженный метод SaveChanges для применения события интеграции 
+        /// </summary>
         public override int SaveChanges()
         {
             if (!_technicalDaysEventHandler.NeedsCallToTechnicalDays(this))
@@ -47,6 +58,9 @@ namespace WorkoutManagementSystem.Svc.Infrastracture
             }
         }
 
+        /// <summary>
+        /// Перегруженный метод SaveChangesAsync для применения события интеграции 
+        /// </summary>
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             if (!_technicalDaysEventHandler.NeedsCallToTechnicalDays(this))

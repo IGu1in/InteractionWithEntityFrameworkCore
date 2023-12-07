@@ -13,7 +13,6 @@ namespace WorkoutManagementSystem.Controllers
 
         public WorkoutManagementSystemController(IWorkoutManagementsSystemService workoutManagementsSystemService)
         {
-
             _workoutManagementsSystemService = workoutManagementsSystemService;
         }
 

@@ -38,10 +38,8 @@ namespace WorkoutManagementSystem.Svc
         }
 
         /// <summary>
-        /// Асинхронный метод 5.11
+        /// Демонстируется получение отдельньго экземпляра WorkoutManagementSystemContext
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public async Task<int> GetCountExerciseInsideWorkoutByIdAsync(long id)
         {
             using (var scope = _serviceScopeFactory.CreateScope())
@@ -57,7 +55,7 @@ namespace WorkoutManagementSystem.Svc
         }
 
         /// <summary>
-        /// Вызов скалярной функции 10.1.1
+        /// Демонстрируется вызов скалярной функции
         /// </summary>
         public async Task<int> GetCountExerciseInsideWorkoutByDbFunction(int id)
         {
@@ -133,10 +131,8 @@ namespace WorkoutManagementSystem.Svc
         }
 
         /// <summary>
-        /// Использование транзакций 4.7.2, использование скрытого свойства 7.14
+        /// Демонстрируется работа с транзакциями и теневым свойством
         /// </summary>
-        /// <param name="gymEquipmentDto"></param>
-        /// <returns></returns>
         public async Task<GymEquipmentDto> CreateGymEquipmentAsync(GymEquipmentDto gymEquipmentDto)
         {
             using (var transaction = _context.Database.BeginTransaction())
@@ -161,10 +157,8 @@ namespace WorkoutManagementSystem.Svc
         }
 
         /// <summary>
-        /// копирование 6.2.3
+        /// Демонстрируется быстрый способ копирования данных со связями
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public async Task<WorkoutDto> CopyWorkoutDto(long id)
         {
             var workout = await _context.Workouts

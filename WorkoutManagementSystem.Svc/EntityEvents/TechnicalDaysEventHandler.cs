@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WorkoutManagementSystem.Svc.Contract.Dto;
 using WorkoutManagementSystem.Svc.Infrastracture;
 using WorkoutManagementSystem.Svc.Infrastracture.Entities;
 

@@ -1,5 +1,8 @@
 ﻿namespace WorkoutManagementSystem.Svc.Contract.Dto
 {
+    /// <summary>
+    /// Звездный участник тренировки
+    /// </summary>
     public class StarParticipantsDto : BaseDto
     {
         /// <summary>
