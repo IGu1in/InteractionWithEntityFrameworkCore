@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using WorkoutManagementSystem.Svc;
 using WorkoutManagementSystem.Svc.AutoMapperProfiles;
 using WorkoutManagementSystem.Svc.Contract;
@@ -35,7 +36,10 @@ internal class Program
         webApplicationBuilder.Services.AddDbContext<WorkoutManagementSystemContext>(options => options.UseNpgsql(
             webApplicationBuilder.Configuration.GetConnectionString("DefaultConnection")
         ));
-        webApplicationBuilder.Services.AddControllers();
+        webApplicationBuilder.Services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
         webApplicationBuilder.Services.AddSwaggerGen();
         webApplicationBuilder.Services.AddAutoMapper(typeof(WorkouManagerSystemProfile));
         webApplicationBuilder.Services.AddScoped<IWorkoutManagementsSystemService, WorkoutManagementsSystemService>();
