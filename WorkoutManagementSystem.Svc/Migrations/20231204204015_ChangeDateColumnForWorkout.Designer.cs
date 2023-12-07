@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WorkoutManagementSystem.Svc.Infrastracture;
@@ -11,9 +12,10 @@ using WorkoutManagementSystem.Svc.Infrastracture;
 namespace WorkoutManagementSystem.Svc.Migrations
 {
     [DbContext(typeof(WorkoutManagementSystemContext))]
-    partial class WorkoutManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231204204015_ChangeDateColumnForWorkout")]
+    partial class ChangeDateColumnForWorkout
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,26 +111,6 @@ namespace WorkoutManagementSystem.Svc.Migrations
                         .IsUnique();
 
                     b.ToTable("StarParticipants");
-                });
-
-            modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.TechnicalDays", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TechnicalDays");
                 });
 
             modelBuilder.Entity("WorkoutManagementSystem.Svc.Infrastracture.Entities.Workout", b =>

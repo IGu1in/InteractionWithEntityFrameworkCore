@@ -18,6 +18,9 @@ namespace WorkoutManagementSystem.Svc.Infrastracture.Entities
         [MaxLength(200)]
         public string Achievements { get; set; }
 
+        /// <summary>
+        /// Идентификатор тренировки
+        /// </summary>
         public long WorkoutId { get; set; }
     }
 }

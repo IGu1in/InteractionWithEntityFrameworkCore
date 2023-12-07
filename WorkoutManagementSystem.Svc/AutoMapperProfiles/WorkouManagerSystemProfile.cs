@@ -19,6 +19,9 @@ namespace WorkoutManagementSystem.Svc.AutoMapperProfiles
 
             CreateMap<GymEquipmentDto, GymEquipment>();
             CreateMap<GymEquipment, GymEquipmentDto>();
+
+            CreateMap<TechnicalDays, TechnicalDaysDto>();
+            CreateMap<TechnicalDaysDto, TechnicalDays>();
         }
     }
 }
