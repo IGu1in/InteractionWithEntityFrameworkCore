@@ -18,8 +18,13 @@ namespace WorkoutManagementSystem.Svc.Contract.Dto
         public string Description { get; set; }
 
         /// <summary>
+        /// Идентификатор тренировки
+        /// </summary>
+        public long WorkoutId { get; set; }
+
+        /// <summary>
         /// Тренажеры для упражнения
         /// </summary>
-        public IEnumerable<GymEquipment>? GymEquipment { get; set; }
+        public IEnumerable<GymEquipmentDto>? GymEquipment { get; set; }
     }
 }
